@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  nginx-proxy-manager:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: nginx-proxy-manager
+    restart: always
+    ports:
+      - '80:80'      # Port cho HTTP
+      - '443:443'    # Port cho HTTPS
+      - '81:81'      # Port để truy cập dashboard quản lý
+    volumes:
+      - ./data:/data  # Lưu trữ cấu hình
+      - ./letsencrypt:/etc/letsencrypt  # Lưu trữ SSL certificates
+    networks:
+      - nginx-proxy
+
+networks:
+  nginx-proxy:
+    external: true
